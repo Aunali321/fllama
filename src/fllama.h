@@ -19,6 +19,9 @@
 extern "C" {
 #endif
 
+// Model management typedefs
+typedef void* fllama_model_handle;
+
 typedef void (*fllama_inference_callback)(const char *response, const char * openai_response_json_string, uint8_t done);
 typedef void (*fllama_log_callback)(const char *);
 
@@ -58,6 +61,14 @@ EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT void fllama_inference(struct fllama_infer
 EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT void fllama_inference_sync(struct fllama_inference_request request,
                            fllama_inference_callback callback);
 EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT void fllama_inference_cancel(int request_id);
+
+// Model management functions
+EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT fllama_model_handle fllama_model_load(const char* model_path, int num_gpu_layers, int num_threads);
+EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT void fllama_model_unload(fllama_model_handle model_handle);
+EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT int fllama_model_is_loaded(const char* model_path);
+EMSCRIPTEN_KEEPALIVE FFI_PLUGIN_EXPORT void fllama_inference_with_model(struct fllama_inference_request request,
+                                              fllama_model_handle model_handle,
+                                              fllama_inference_callback callback);
 #ifdef __cplusplus
 }
 #endif

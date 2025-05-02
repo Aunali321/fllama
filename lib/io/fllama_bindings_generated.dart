@@ -133,6 +133,75 @@ class FllamaBindings {
           'fllama_tokenize');
   late final _fllama_tokenize =
       _fllama_tokenizePtr.asFunction<int Function(fllama_tokenize_request)>();
+      
+  // Model management functions
+  ffi.Pointer<ffi.Void> fllama_model_load(
+    ffi.Pointer<ffi.Char> model_path,
+    int num_gpu_layers,
+    int num_threads,
+  ) {
+    return _fllama_model_load(
+      model_path,
+      num_gpu_layers,
+      num_threads,
+    );
+  }
+
+  late final _fllama_model_loadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Void> Function(
+              ffi.Pointer<ffi.Char>, ffi.Int, ffi.Int)>>('fllama_model_load');
+  late final _fllama_model_load = _fllama_model_loadPtr
+      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Char>, int, int)>();
+
+  void fllama_model_unload(
+    ffi.Pointer<ffi.Void> model_handle,
+  ) {
+    return _fllama_model_unload(
+      model_handle,
+    );
+  }
+
+  late final _fllama_model_unloadPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<ffi.Void>)>>('fllama_model_unload');
+  late final _fllama_model_unload = _fllama_model_unloadPtr
+      .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
+  int fllama_model_is_loaded(
+    ffi.Pointer<ffi.Char> model_path,
+  ) {
+    return _fllama_model_is_loaded(
+      model_path,
+    );
+  }
+
+  late final _fllama_model_is_loadedPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.Char>)>>('fllama_model_is_loaded');
+  late final _fllama_model_is_loaded = _fllama_model_is_loadedPtr
+      .asFunction<int Function(ffi.Pointer<ffi.Char>)>();
+
+  void fllama_inference_with_model(
+    fllama_inference_request request,
+    ffi.Pointer<ffi.Void> model_handle,
+    fllama_inference_callback callback,
+  ) {
+    return _fllama_inference_with_model(
+      request,
+      model_handle,
+      callback,
+    );
+  }
+
+  late final _fllama_inference_with_modelPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(fllama_inference_request,
+              ffi.Pointer<ffi.Void>, fllama_inference_callback)>>('fllama_inference_with_model');
+  late final _fllama_inference_with_model = _fllama_inference_with_modelPtr.asFunction<
+      void Function(fllama_inference_request, ffi.Pointer<ffi.Void>, fllama_inference_callback)>();
 }
 
 final class fllama_inference_request extends ffi.Struct {

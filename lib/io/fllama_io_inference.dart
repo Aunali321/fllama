@@ -23,6 +23,9 @@ typedef FllamaLogCallbackDart = void Function(Pointer<Char>);
 /// This is *not* what most people want to use. LLMs post-ChatGPT use a chat
 /// template and an EOS token. Use [fllamaChat] instead if you expect this
 /// sort of interface, i.e. an OpenAI-like API.
+/// 
+/// Note: If you want to manually control when models are loaded/unloaded,
+/// use [FllamaModelCache] to pre-load models before inference.
 Future<int> fllamaInference(
     FllamaInferenceRequest request, FllamaInferenceCallback callback) async {
   final SendPort helperIsolateSendPort = await _helperIsolateSendPort;

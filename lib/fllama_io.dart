@@ -1,5 +1,6 @@
 export 'io/fllama_io_inference.dart';
 export 'io/fllama_io_tokenize.dart';
+export 'model/model_cache.dart';
 
 import 'dart:ffi';
 import 'dart:io';
